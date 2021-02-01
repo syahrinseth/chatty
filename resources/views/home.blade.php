@@ -48,7 +48,7 @@
 @section('scripts')
 <script>
     // Retrieve Firebase Messaging object.
-    const messaging = firebase.messaging();
+    // const messaging = firebase.messaging();
     // Add the public key generated from the console here.
     messaging.usePublicVapidKey("BA3gvvv3B5qp6kpiWmoOLewhUIcBxVYDdzLj38w_57mFgSojPoITv6i3kEIpEzqZx0qIh5En1hSDwiTgziLyc1Q");
     function sendTokenToServer(fcm_token) {
@@ -64,9 +64,10 @@
     }
 
     function retreiveToken(){
-        messaging.getToken().then((currentToken) => {
+        messaging.getToken({vapidKey: "BA3gvvv3B5qp6kpiWmoOLewhUIcBxVYDdzLj38w_57mFgSojPoITv6i3kEIpEzqZx0qIh5En1hSDwiTgziLyc1Q"}).then((currentToken) => {
             if (currentToken) {
                 sendTokenToServer(currentToken);
+                console.log('Token sended to server.');
                 // updateUIForPushEnabled(currentToken);
             } else {
                 // Show permission request.
@@ -78,7 +79,7 @@
             }
         }).catch((err) => {
             console.log(err.message);
-            showToken('Error retrieving Instance ID token. ', err);
+            // showToken('Error retrieving Instance ID token. ', err);
             // setTokenSentToServer(false);
         });
     }
